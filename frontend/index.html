@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVON - Joias em Prata 925</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: #f0f0f0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #d4d4d4;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-icons a {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-icons a:hover {
+            transform: scale(1.1);
+            color: #d4d4d4;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(74, 74, 74, 0.7), rgba(106, 106, 106, 0.7)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23f5f5f5" width="1200" height="800"/><g fill="%23e0e0e0"><circle cx="300" cy="200" r="100" opacity="0.1"/><circle cx="900" cy="600" r="150" opacity="0.05"/><circle cx="600" cy="400" r="80" opacity="0.08"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #666, #888);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #777, #999);
+        }
+
+        /* Categories */
+        .categories {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #4a4a4a;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(45deg, #666, #888);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .category-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #888;
+        }
+
+        .category-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .category-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #4a4a4a;
+        }
+
+        .category-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Featured Products */
+        .featured {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #f5f5f5, #eeeeee);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #aaa;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4a4a4a;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(45deg, #666, #888);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(45deg, #777, #999);
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #4a4a4a;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .feature i {
+            color: #4a4a4a;
+            font-size: 1.2rem;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #aaa;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 0.8rem 1.5rem;
+            display: block;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .dropdown-content a:hover {
+            background: #f8f9fa;
+            color: #4a4a4a !important;
+            padding-left: 2rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        .dropdown > a i {
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50px;
+            padding: 15px;
+            font-size: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">SAVON</a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li class="dropdown">
+                    <a href="produtos.html">Produtos <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="produtos.html?categoria=berloques">Berloques</a>
+                        <a href="produtos.html?categoria=colares">Colares</a>
+                        <a href="produtos.html?categoria=brincos">Brincos</a>
+                        <a href="produtos.html?categoria=aneis">Anéis</a>
+                        <a href="produtos.html?categoria=pulseiras">Pulseiras</a>
+                    </div>
+                </li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            
+            <div class="nav-icons">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-heart"></i></a>
+                <a href="#" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>SAVON</h1>
+            <p>Joias em Prata 925 de Alta Qualidade</p>
+            <a href="produtos.html" class="cta-button">Explorar Coleção</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <h2 class="section-title">Nossas Categorias</h2>
+            <div class="category-grid">
+                <div class="category-card" onclick="filterProducts('aneis')">
+                    <div class="category-image">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Anéis</h3>
+                        <p>Coleção exclusiva de anéis em prata 925</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="filterProducts('brincos')">
+                    <div class="category-image">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Brincos</h3>
+                        <p>Elegância e sofisticação para seus looks</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="filterProducts('berloques')">
+                    <div class="category-image">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Berloques</h3>
+                        <p>Personalize sua pulseira com nossos berloques</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='produtos.html?categoria=pulseiras'">
+                    <div class="category-image">
+                        <i class="fas fa-bracelet"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Pulseiras</h3>
+                        <p>Pulseiras delicadas para o dia a dia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured" id="produtos">
+        <div class="container">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            <div class="product-grid" id="product-grid">
+                <!-- Produtos serão carregados dinamicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="sobre">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Sobre a SAVON</h2>
+                    <p>Somos especializados em joias de prata 925 de alta qualidade. Cada peça é cuidadosamente selecionada para oferecer elegância, durabilidade e beleza incomparáveis.</p>
+                    <p>Nossa missão é democratizar o acesso a joias de qualidade, oferecendo peças únicas que complementam a personalidade de cada cliente.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-certificate"></i>
+                            <span>Prata 925 Certificada</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Entrega Rápida</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Garantia de Qualidade</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Atendimento Personalizado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-gem"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SAVON</h3>
+                    <p>Joias em prata 925 de alta qualidade para todos os momentos especiais da sua vida.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <p><a href="#home">Início</a></p>
+                    <p><a href="#produtos">Produtos</a></p>
+                    <p><a href="#sobre">Sobre</a></p>
+                    <p><a href="#contato">Contato</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Atendimento</h3>
+                    <p>Segunda a Sexta: 9h às 18h</p>
+                    <p>Sábado: 9h às 12h</p>
+                    <p>WhatsApp: (51) 99999-9999</p>
+                    <p>Email: contato@savon.com.br</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Informações</h3>
+                    <p><a href="#">Política de Privacidade</a></p>
+                    <p><a href="#">Termos de Uso</a></p>
+                    <p><a href="#">Trocas e Devoluções</a></p>
+                    <p><a href="#">Frete Grátis</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SAVON. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/5551999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Produtos completos com sistema de imagens
+        const produtos = [
+            // BERLOQUES (7 produtos)
+            { id: 1, nome: "Berloque Coração Delicado", preco: 45.90, categoria: "berloques", destaque: true, novo: true, imagem: "berloque1.jpg" },
+            { id: 2, nome: "Berloque Estrela Brilhante", preco: 52.90, categoria: "berloques", destaque: false, novo: false, imagem: "berloque2.jpg" },
+            { id: 3, nome: "Berloque Infinito", preco: 48.90, categoria: "berloques", destaque: true, novo: true, imagem: "berloque3.jpg" },
+            { id: 4, nome: "Berloque Flor Elegante", preco: 55.90, categoria: "berloques", destaque: false, novo: false, imagem: "berloque4.jpg" },
+            { id: 5, nome: "Berloque Borboleta", preco: 49.90, categoria: "berloques", destaque: false, novo: true, imagem: "berloque5.jpg" },
+            { id: 6, nome: "Berloque Lua Crescente", preco: 46.90, categoria: "berloques", destaque: false, novo: false, imagem: "berloque6.jpg" },
+            { id: 7, nome: "Berloque Chave Vintage", preco: 53.90, categoria: "berloques", destaque: false, novo: false, imagem: "berloque7.jpg" },
+
+            // COLARES (5 produtos)
+            { id: 8, nome: "Colar Corrente Veneziana", preco: 149.90, categoria: "colares", destaque: true, novo: false, imagem: "colar1.jpg" },
+            { id: 9, nome: "Colar Pingente Coração", preco: 189.90, categoria: "colares", destaque: false, novo: true, imagem: "colar2.jpg" },
+            { id: 10, nome: "Colar Choker Moderno", preco: 129.90, categoria: "colares", destaque: true, novo: false, imagem: "colar3.jpg" },
+            { id: 11, nome: "Colar Longo Elegante", preco: 199.90, categoria: "colares", destaque: false, novo: true, imagem: "colar4.jpg" },
+            { id: 12, nome: "Colar Pingente Estrela", preco: 169.90, categoria: "colares", destaque: false, novo: false, imagem: "colar5.jpg" },
+
+            // BRINCOS (6 produtos)
+            { id: 13, nome: "Brincos Gota Delicada", preco: 129.90, categoria: "brincos", destaque: true, novo: false, imagem: "brinco1.jpg" },
+            { id: 14, nome: "Brincos Argola Média", preco: 89.90, categoria: "brincos", destaque: false, novo: false, imagem: "brinco2.jpg" },
+            { id: 15, nome: "Brincos Estrela Pequena", preco: 79.90, categoria: "brincos", destaque: false, novo: true, imagem: "brinco3.jpg" },
+            { id: 16, nome: "Brincos Argola Grande", preco: 109.90, categoria: "brincos", destaque: true, novo: false, imagem: "brinco4.jpg" },
+            { id: 17, nome: "Brincos Coração Mini", preco: 69.90, categoria: "brincos", destaque: false, novo: true, imagem: "brinco5.jpg" },
+            { id: 18, nome: "Brincos Pendente Elegante", preco: 159.90, categoria: "brincos", destaque: false, novo: false, imagem: "brinco6.jpg" },
+
+            // ANÉIS (4 produtos)
+            { id: 19, nome: "Anel Solitário Elegante", preco: 189.90, categoria: "aneis", destaque: true, novo: true, imagem: "anel1.jpg" },
+            { id: 20, nome: "Anel Compromisso", preco: 299.90, categoria: "aneis", destaque: false, novo: true, imagem: "anel2.jpg" },
+            { id: 21, nome: "Anel Infinito Delicado", preco: 159.90, categoria: "aneis", destaque: true, novo: false, imagem: "anel3.jpg" },
+            { id: 22, nome: "Anel Três Pedras", preco: 249.90, categoria: "aneis", destaque: false, novo: false, imagem: "anel4.jpg" },
+
+            // PULSEIRAS (1 produto)
+            { id: 23, nome: "Pulseira Corrente Clássica", preco: 199.90, categoria: "pulseiras", destaque: true, novo: true, imagem: "pulseira1.jpg" }
+        ];
+
+        let carrinho = [];
+        let filtroAtual = 'todos';
+
+        // Função para obter caminho da imagem
+        function obterImagemProduto(nomeImagem) {
+            return `images/produtos/${nomeImagem}`;
+        }
+
+        // Carregar produtos
+        function carregarProdutos(filtro = 'todos') {
+            const grid = document.getElementById('product-grid');
+            const produtosFiltrados = filtro === 'todos' ? 
+                produtos.filter(p => p.destaque) : 
+                produtos.filter(p => p.categoria === filtro);
+
+            grid.innerHTML = produtosFiltrados.map(produto => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${obterImagemProduto(produto.imagem)}" 
+                             alt="${produto.nome}" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px 15px 0 0;">
+                        <div style="display: none; width: 100%; height: 100%; align-items: center; justify-content: center; font-size: 2.5rem; color: #aaa;">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        ${produto.novo ? '<div class="product-badge">NOVO</div>' : ''}
+                    </div>
+                    <div class="product-info">
+                        <h3>${produto.nome}</h3>
+                        <div class="product-price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</div>
+                        <button class="add-to-cart" onclick="adicionarAoCarrinho(${produto.id})">
+                            Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filtrar produtos por categoria
+        function filterProducts(categoria) {
+            filtroAtual = categoria;
+            carregarProdutos(categoria);
+            
+            // Scroll suave para a seção de produtos
+            document.getElementById('produtos').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Adicionar produto ao carrinho
+        function adicionarAoCarrinho(produtoId) {
+            const produto = produtos.find(p => p.id === produtoId);
+            const itemExistente = carrinho.find(item => item.id === produtoId);
+            
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                carrinho.push({ ...produto, quantidade: 1 });
+            }
+            
+            atualizarContadorCarrinho();
+            
+            // Feedback visual
+            const button = event.target;
+            const textoOriginal = button.textContent;
+            button.textContent = 'Adicionado!';
+            button.style.background = '#2ecc71';
+            
+            setTimeout(() => {
+                button.textContent = textoOriginal;
+                button.style.background = '';
+            }, 1500);
+        }
+
+        // Atualizar contador do carrinho
+        function atualizarContadorCarrinho() {
+            const contador = document.querySelector('.cart-count');
+            const total = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+            contador.textContent = total;
+            
+            if (total > 0) {
+                contador.style.display = 'flex';
+            } else {
+                contador.style.display = 'none';
+            }
+        }
+
+        // Scroll suave para links do menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Menu mobile
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenu.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Animação de scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(74, 74, 74, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarProdutos();
+            atualizarContadorCarrinho();
+        });
+    </script>
+</body>
+</html>

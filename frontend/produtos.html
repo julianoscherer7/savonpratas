@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - SAVON Joias em Prata 925</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: #f0f0f0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #d4d4d4;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-icons a {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-icons a:hover {
+            transform: scale(1.1);
+            color: #d4d4d4;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(74, 74, 74, 0.8), rgba(106, 106, 106, 0.8)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f5f5f5" width="1200" height="400"/><g fill="%23e0e0e0"><circle cx="200" cy="100" r="50" opacity="0.1"/><circle cx="800" cy="300" r="80" opacity="0.05"/><circle cx="500" cy="200" r="40" opacity="0.08"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid #666;
+            color: #666;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(45deg, #666, #888);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .product-count {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Products Grid */
+        .products-section {
+            padding: 3rem 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 280px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-image .placeholder {
+            font-size: 3rem;
+            color: #adb5bd;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .product-badge.destaque {
+            background: #ffa502;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4a4a4a;
+        }
+
+        .old-price {
+            font-size: 1rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount {
+            background: #e74c3c;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background: linear-gradient(45deg, #666, #888);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(45deg, #777, #999);
+            transform: translateY(-2px);
+        }
+
+        .wishlist-btn {
+            background: transparent;
+            border: 2px solid #ddd;
+            color: #666;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 45px;
+        }
+
+        .wishlist-btn:hover {
+            border-color: #ff4757;
+            color: #ff4757;
+            transform: scale(1.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 100%);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bbb;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            border-radius: 50px;
+            padding: 15px;
+            font-size: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+            
+            .filter-btn {
+                white-space: nowrap;
+                min-width: fit-content;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .nav-container, .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">SAVON</a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+            
+            <div class="nav-icons">
+                <a href="#" onclick="toggleSearch()"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-heart"></i></a>
+                <a href="#" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Nossa Coleção</h1>
+            <p>Joias em Prata 925 de Alta Qualidade</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filters">
+                <button class="filter-btn active" onclick="filtrarProdutos('todos')">
+                    Todos os Produtos
+                </button>
+                <button class="filter-btn" onclick="filtrarProdutos('berloques')">
+                    Berloques <span class="badge">7</span>
+                </button>
+                <button class="filter-btn" onclick="filtrarProdutos('colares')">
+                    Colares <span class="badge">5</span>
+                </button>
+                <button class="filter-btn" onclick="filtrarProdutos('brincos')">
+                    Brincos <span class="badge">6</span>
+                </button>
+                <button class="filter-btn" onclick="filtrarProdutos('aneis')">
+                    Anéis <span class="badge">4</span>
+                </button>
+                <button class="filter-btn" onclick="filtrarProdutos('pulseiras')">
+                    Pulseiras <span class="badge">1</span>
+                </button>
+            </div>
+            <div class="product-count" id="product-count">
+                Mostrando 23 produtos
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="products-grid">
+                <!-- Produtos serão carregados aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SAVON</h3>
+                    <p>Joias em prata 925 de alta qualidade para todos os momentos especiais da sua vida.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <p><a href="index.html">Início</a></p>
+                    <p><a href="produtos.html">Produtos</a></p>
+                    <p><a href="index.html#sobre">Sobre</a></p>
+                    <p><a href="index.html#contato">Contato</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Atendimento</h3>
+                    <p>Segunda a Sexta: 9h às 18h</p>
+                    <p>Sábado: 9h às 12h</p>
+                    <p>WhatsApp: (51) 99999-9999</p>
+                    <p>Email: contato@savon.com.br</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Informações</h3>
+                    <p><a href="#">Política de Privacidade</a></p>
+                    <p><a href="#">Termos de Uso</a></p>
+                    <p><a href="#">Trocas e Devoluções</a></p>
+                    <p><a href="#">Frete Grátis</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 SAVON. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/5551999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Banco de dados dos produtos
+        const produtos = [
+            // BERLOQUES (7)
+            {
+                id: 1,
+                nome: "Berloque Coração Delicado",
+                categoria: "berloques",
+                preco: 45.90,
+                precoAntigo: null,
+                descricao: "Berloque em formato de coração, perfeito para simbolizar amor e carinho.",
+                imagem: "images/berloque-coracao.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 2,
+                nome: "Berloque Estrela Brilhante",
+                categoria: "berloques",
+                preco: 52.90,
+                precoAntigo: 65.90,
+                descricao: "Berloque estrela com acabamento brilhante, ideal para quem sonha alto.",
+                imagem: "images/berloque-estrela.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 3,
+                nome: "Berloque Flor Romântica",
+                categoria: "berloques",
+                preco: 38.90,
+                precoAntigo: null,
+                descricao: "Delicado berloque em formato de flor, trazendo delicadeza ao seu look.",
+                imagem: "images/berloque-flor.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 4,
+                nome: "Berloque Lua Crescente",
+                categoria: "berloques",
+                preco: 42.90,
+                precoAntigo: null,
+                descricao: "Berloque lua crescente, simbolizando renovação e novos ciclos.",
+                imagem: "images/berloque-lua.jpg",
+                novo: false,
+                destaque: false
+            },
+            {
+                id: 5,
+                nome: "Berloque Infinito",
+                categoria: "berloques",
+                preco: 48.90,
+                precoAntigo: 58.90,
+                descricao: "Berloque símbolo do infinito, representando amor eterno e conexões especiais.",
+                imagem: "images/berloque-infinito.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 6,
+                nome: "Berloque Borboleta",
+                categoria: "berloques",
+                preco: 55.90,
+                precoAntigo: null,
+                descricao: "Berloque borboleta detalhado, simbolizando transformação e liberdade.",
+                imagem: "images/berloque-borboleta.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 7,
+                nome: "Berloque Âncora",
+                categoria: "berloques",
+                preco: 49.90,
+                precoAntigo: null,
+                descricao: "Berloque âncora, perfeito para quem valoriza estabilidade e força.",
+                imagem: "images/berloque-ancora.jpg",
+                novo: false,
+                destaque: false
+            },
+
+            // COLARES (5)
+            {
+                id: 8,
+                nome: "Colar Corrente Veneziana",
+                categoria: "colares",
+                preco: 129.90,
+                precoAntigo: 149.90,
+                descricao: "Elegante corrente veneziana, clássica e versátil para o dia a dia.",
+                imagem: "images/colar-veneziana.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 9,
+                nome: "Colar Pingente Coração",
+                categoria: "colares",
+                preco: 89.90,
+                precoAntigo: null,
+                descricao: "Colar delicado com pingente de coração, perfeito para presentes especiais.",
+                imagem: "images/colar-coracao.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 10,
+                nome: "Colar Choker Minimalista",
+                categoria: "colares",
+                preco: 75.90,
+                precoAntigo: null,
+                descricao: "Choker minimalista e moderno, ideal para looks contemporâneos.",
+                imagem: "images/colar-choker.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 11,
+                nome: "Colar Longo Boho",
+                categoria: "colares",
+                preco: 145.90,
+                precoAntigo: 165.90,
+                descricao: "Colar longo estilo boho, perfeito para sobreposições e looks casuais.",
+                imagem: "images/colar-boho.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 12,
+                nome: "Colar Gargantilha Elegante",
+                categoria: "colares",
+                preco: 95.90,
+                precoAntigo: null,
+                descricao: "Gargantilha elegante com detalhes refinados, ideal para ocasiões especiais.",
+                imagem: "images/colar-gargantilha.jpg",
+                novo: false,
+                destaque: false
+            },
+
+            // BRINCOS (6)
+            {
+                id: 13,
+                nome: "Brincos Argola Clássica",
+                categoria: "brincos",
+                preco: 79.90,
+                precoAntigo: 95.90,
+                descricao: "Argolas clássicas em prata 925, versáteis para qualquer ocasião.",
+                imagem: "images/brincos-argola.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 14,
+                nome: "Brincos Gota Delicada",
+                categoria: "brincos",
+                preco: 65.90,
+                precoAntigo: null,
+                descricao: "Brincos em formato de gota, elegantes e femininos.",
+                imagem: "images/brincos-gota.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 15,
+                nome: "Brincos Ear Cuff Moderno",
+                categoria: "brincos",
+                preco: 85.90,
+                precoAntigo: null,
+                descricao: "Ear cuff moderno e despojado, tendência absoluta em acessórios.",
+                imagem: "images/brincos-earcuff.jpg",
+                novo: true,
+                destaque: true
+            },
+            {
+                id: 16,
+                nome: "Brincos Pequenos Estrela",
+                categoria: "brincos",
+                preco: 42.90,
+                precoAntigo: null,
+                descricao: "Pequenos brincos estrela, discretos e charmosos para o dia a dia.",
+                imagem: "images/brincos-estrela.jpg",
+                novo: false,
+                destaque: false
+            },
+            {
+                id: 17,
+                nome: "Brincos Pendente Longo",
+                categoria: "brincos",
+                preco: 99.90,
+                precoAntigo: 119.90,
+                descricao: "Brincos pendentes longos, sofisticados para eventos especiais.",
+                imagem: "images/brincos-pendente.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 18,
+                nome: "Brincos Botão Redondo",
+                categoria: "brincos",
+                preco: 35.90,
+                precoAntigo: null,
+                descricao: "Brincos botão redondos, básicos e essenciais para qualquer coleção.",
+                imagem: "images/brincos-botao.jpg",
+                novo: false,
+                destaque: false
+            },
+
+            // ANÉIS (4)
+            {
+                id: 19,
+                nome: "Anel Solitário Elegante",
+                categoria: "aneis",
+                preco: 189.90,
+                precoAntigo: 219.90,
+                descricao: "Anel solitário clássico, perfeito para ocasiões especiais e pedidos.",
+                imagem: "images/anel-solitario.jpg",
+                novo: false,
+                destaque: true
+            },
+            {
+                id: 20,
+                nome: "Anel Aliança Lisa",
+                categoria: "aneis",
+                preco: 149.90,
+                precoAntigo: null,
+                descricao: "Aliança lisa tradicional em prata 925, símbolo de união e compromisso.",
+                imagem: "images/anel-alianca.jpg",
+                novo: true,
+                destaque: false
+            },
+            {
+                id: 21,
+                nome: "Anel Vintage Detalhado",
+                categoria: "aneis",
+                preco: 165.90,
+                precoAntigo: null,
+                descricao: "Anel vintage com detalhes ornamentais, para quem aprecia design clássico.",
+                imagem: "images/anel-vintage.jpg",
+                novo: true,
+                destaque: true
+            },
+            {
+                id: 22,
+                nome: "Anel Minimalista Fino",
+                categoria: "aneis",
+                preco: 89.90,
+                precoAntigo: 105.90,
+                descricao: "Anel fino minimalista, delicado e moderno para uso diário.",
+                imagem: "images/anel-minimalista.jpg",
+                novo: false,
+                destaque: false
+            },
+
+            // PULSEIRAS (1)
+           
